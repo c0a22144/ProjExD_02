@@ -12,6 +12,7 @@ pg.K_LEFT: (-5, 0),
 pg.K_RIGHT: (+5, 0),
 }
 
+
 def check_bound(rect:pg.Rect) -> tuple[bool, bool]:
     """
     こうかとんRect　爆弾Rectが画面外 or 画面内かを判定する関数
@@ -24,6 +25,22 @@ def check_bound(rect:pg.Rect) -> tuple[bool, bool]:
     if rect.top < 0 or HEIGHT < rect.bottom: #  縦方向判定
         tate = False
     return yoko, tate
+def init_gazou():
+    kk_img0 = pg.transform.rotozoom(pg.image.load("ex02/fig/3.png"),0, 2.0)
+    kk_img = pg.transform.flip(kk_img0, True, False)
+    return{
+        (0, 0):kk_img,
+        (+1, 0):kk_img,
+        (+1, -1):pg.transform.rotozoom(kk_img, 45, 1.0),
+        (0, -1):pg.transform.rotozoom(kk_img, 90, 1.0),
+        (-1, -1):pg.transform.rotozoom(kk_img0, -45, 1.0),
+        (-1, 0):kk_img,
+        (-1, +1):pg.transform.rotozoom(kk_img0, 45, 1.0),
+        (0, +1):pg.transform.rotozoom(kk_img, -90, 1.0),
+        (+1, +1):pg.transform.rotozoom(kk_img, -45, 1.0),
+    }
+
+    
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
@@ -33,6 +50,8 @@ def main():
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
      #  こうかとん
     kk_rct = kk_img.get_rect()
+    kk_imgs = init_gazou()
+    kk_rct = kk_imgs[(0, 0)].get_rect()
     kk_rct.center = 900, 400
     bd_img = pg.Surface((20, 20))  # 練習１
     pg.draw.circle(bd_img, (255, 0, 0), (10, 10), 10)
@@ -42,7 +61,6 @@ def main():
     bd_rct = bd_img.get_rect()
     bd_rct.center = x, y
     vx, vy = +5, +5
-
     clock = pg.time.Clock()
 
     tmr = 0

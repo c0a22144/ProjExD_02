@@ -25,6 +25,7 @@ def check_bound(rect:pg.Rect) -> tuple[bool, bool]:
     if rect.top < 0 or HEIGHT < rect.bottom: #  縦方向判定
         tate = False
     return yoko, tate
+ #  こうかとんの画像追加
 def init_gazou():
     kk_img0 = pg.transform.rotozoom(pg.image.load("ex02/fig/3.png"),0, 2.0)
     kk_img = pg.transform.flip(kk_img0, True, False)
